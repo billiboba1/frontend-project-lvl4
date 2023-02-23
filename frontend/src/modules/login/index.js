@@ -1,1 +1,1 @@
-export { loginModule } from './components/form.jsx';
+export { LoginModule } from './components/form.jsx';

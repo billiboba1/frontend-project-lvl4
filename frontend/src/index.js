@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import loginPage from './pages/loginPage';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
@@ -22,10 +21,11 @@ const mainSlice = createSlice({
   },
 });
 
+const mainReducer = mainSlice.reducer;
+
 const store = configureStore({
   reducer: {
-    // counter – имя внутри объекта состояния state.counter
-    counter: counterReducer,
+    main: mainReducer,
   },
 });
 

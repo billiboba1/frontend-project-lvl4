@@ -1,6 +1,6 @@
 import loginForm from "../../../components/loginForm";
 
-const loginModule = () => {
+export const LoginModule = () => {
   return(
     <loginForm/>
   )

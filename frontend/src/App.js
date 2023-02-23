@@ -1,21 +1,24 @@
 import './App.css';
-import loginPage from './pages/loginPage';
-import errorPage from './pages/errorPage';
+import { LoginPage } from './pages/loginPage';
+import ErrorPage from './pages/errorPage';
+import ChatPage from './pages/chatPage';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default App = () => {
-  const count = useSelector((state) => state.counter.value);
+export const App = () => {
+  console.log();
+  const path = useSelector((state) => state.main.path);
   // Возвращает метод store.dispatch() текущего хранилища
   const dispatch = useDispatch();
 
-  switch(state) {
+  console.log(path);
+
+  switch(path) {
     case '/login':
-      return (loginPage);
+      return (<LoginPage/>);
     case '/':
-      return (chatPage);
-      break;
+      return (<ChatPage/>);
     case '404':
-      return (errorPage);
-      break;
+      return (<ErrorPage/>);
     default: 
       break;
   }

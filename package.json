@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/billiboba1/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6"
+    "@hexlet/chat-server": "^1.1.6",
+    "eslint": "^8.34.0"
   }
 }
