@@ -1,25 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import loginPage from './pages/loginPage';
+import errorPage from './pages/errorPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default App = () => {
+  const count = useSelector((state) => state.counter.value);
+  // Возвращает метод store.dispatch() текущего хранилища
+  const dispatch = useDispatch();
+
+  switch(state) {
+    case '/login':
+      return (loginPage);
+    case '/':
+      return (chatPage);
+      break;
+    case '404':
+      return (errorPage);
+      break;
+    default: 
+      break;
+  }
 }
-
-export default App;
