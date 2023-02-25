@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
@@ -15,9 +15,9 @@ const mainSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    login: state.path = '/login',
-    chat: state.path = '/',
-    error: state.path = '404',
+    login: (state) => state.path = '/login',
+    chat: (state) => state.path = '/',
+    error: (state) => state.path = '404',
   },
 });
 

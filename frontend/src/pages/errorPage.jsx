@@ -1,7 +1,7 @@
 import React from "react";
 import { errorModule } from "../modules/error";
 
-export default errorPage = () => {
+export default () => {
   return (
     <errorModule/>
   )

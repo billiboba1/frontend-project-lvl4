@@ -19,6 +19,10 @@
   "homepage": "https://github.com/billiboba1/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6",
-    "eslint": "^8.34.0"
+    "bootstrap": "^5.2.3",
+    "eslint": "^8.34.0",
+    "react-bootstrap": "^2.7.2",
+    "sass": "^1.58.3",
+    "sass-loader": "^13.2.0"
   }
 }

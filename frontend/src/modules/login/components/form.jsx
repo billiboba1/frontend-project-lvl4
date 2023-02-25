@@ -1,7 +1,7 @@
-import loginForm from "../../../components/loginForm";
+import LoginForm from "../../../components/loginForm";
 
 export const LoginModule = () => {
   return(
-    <loginForm/>
+    <LoginForm/>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export default loginForm = () => (
+export default () => (
   <div>
     <h1>Any place in your app!</h1>
     <Formik
