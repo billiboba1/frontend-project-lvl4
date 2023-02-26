@@ -3,7 +3,6 @@ import { LoginPage } from './pages/loginPage';
 import ErrorPage from './pages/errorPage';
 import ChatPage from './pages/chatPage';
 import { useSelector, useDispatch } from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const App = () => {
   const path = useSelector((state) => state.main.path);
@@ -15,7 +14,6 @@ export const App = () => {
 
   switch(path) {
     case '/login':
-      console.log(<LoginPage/>);
       return (<LoginPage/>);
     case '/':
       return (<ChatPage/>);

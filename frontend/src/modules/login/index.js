@@ -1,1 +1,1 @@
-export { LoginModule } from './components/form.jsx';
+export { BackgroundComponent as LoginModule} from './components/background.jsx';

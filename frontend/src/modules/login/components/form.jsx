@@ -1,7 +1,9 @@
 import LoginForm from "../../../components/loginForm";
 
-export const LoginModule = () => {
+export const FormComponent = () => {
   return(
-    <LoginForm/>
+    <div className='d-flex justify-content-center border border-secondary rounded bg-dark'>
+      <LoginForm/>
+    </div>
   )
 }
