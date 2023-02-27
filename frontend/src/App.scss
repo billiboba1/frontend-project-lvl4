@@ -1,5 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
 
-.bg-image {
-  background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1614441348_9-p-temnii-fon-dlya-chata-12.jpg");
+body {
+  background: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1614441348_9-p-temnii-fon-dlya-chata-12.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+
+.center {
+  display: flex;
+  align-items: center
 }

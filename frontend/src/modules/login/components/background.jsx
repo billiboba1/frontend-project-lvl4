@@ -1,9 +1,11 @@
 import { FormComponent } from './form';
 
-export const BackgroundComponent = () => {
+const BackgroundComponent = () => {
   return (
-    <div className='h-100 bg-image'>
+    <div className='justify-content-center center'>
       <FormComponent />
     </div>
   )
 }
+
+export { BackgroundComponent as LoginModule };

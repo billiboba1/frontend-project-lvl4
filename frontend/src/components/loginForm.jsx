@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export default () => (
   <div>
-    <h2>Sign in</h2>
+    <h2 className='text-center'>Войти</h2>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -25,19 +25,17 @@ export default () => (
       }}
     >
       {({ isSubmitting }) => (
-        <Form className='m-1 justify-content-center'>
-          <div className="my-2 form-group row">
-            <label for="email" className="col-sm-2 col-form-label">Email</label>
-            <Field className="col-sm-10" type="email" name="email" placeholder="Email"/>
-            <ErrorMessage className="col-form-label text-danger" name="email" component="p" />
+        <Form className='m-1'>
+          <div className="my-3">
+            <Field className="form-control" type="email" name="email" placeholder="Email"/>
+            <ErrorMessage className="text-danger" name="email" component="div" />
           </div>
-          <div className="my-2 form-group row">
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
-            <Field className="col-sm-10" type="password" name="password" placeholder="Password"/>
-            <ErrorMessage className="text-danger" name="password" component="p" />
+          <div className="my-3">
+            <Field className="form-control" type="password" name="password" placeholder="Password"/>
+            <ErrorMessage className="text-danger" name="password" component="div" />
           </div>
-          <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-            Sign in
+          <button className="btn btn-outline-light w-100" type="submit" disabled={isSubmitting}>
+            Войти
           </button>
         </Form>
       )}
