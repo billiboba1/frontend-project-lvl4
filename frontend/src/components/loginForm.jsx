@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios';
 
 export default () => (
   <div>
@@ -18,10 +19,14 @@ export default () => (
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+        console.log({ username: values.email, password: values.password});
+        axios.post('/api/v1/login', { username: 'admin', password: 'admin' }).then((response) => {
+          console.log(response.data);
+        });
+        axios.post('/api/v1/login', { username: values.email, password: values.password}).then((response) => {
+          console.log(response.data);
+          localStorage.setItem(values.email, values.password);
+        });
       }}
     >
       {({ isSubmitting }) => (
