@@ -7,5 +7,3 @@ export const FormComponent = () => {
     </div>
   )
 }
-
-// border border-secondary rounded bg-dark

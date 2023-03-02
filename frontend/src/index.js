@@ -8,14 +8,14 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  path: '/login',
+  path: '/',
 }
 
 const mainSlice = createSlice({
-  name: 'counter',
+  name: 'main',
   initialState,
   reducers: {
-    login: (state) => state.path = '/login',
+    login: (state) => state.path = 'login',
     chat: (state) => state.path = '/',
     error: (state) => state.path = '404',
   },
