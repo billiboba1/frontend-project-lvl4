@@ -20,7 +20,7 @@ export default () => (
         console.log({ username: values.username, password: values.password});
         axios.post('/api/v1/login', { username: values.username, password: values.password}).then((response) => {
           console.log(response.data);
-          localStorage.setItem(values.username, values.password);
+          localStorage.setItem('user', {token: response.data, username: values.username, password: values.password});
         });
       }}
     >
@@ -42,20 +42,3 @@ export default () => (
     </Formik>
   </div>
 );
-
-/*
-<form>
-  <div class="form-group row">
-    <label for="staticusername" class="col-sm-2 col-form-label">username</label>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticusername" value="username@example.com">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-    </div>
-  </div>
-</form>
-*/

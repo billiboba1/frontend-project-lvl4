@@ -1,8 +1,8 @@
 import React from "react";
-import { errorModule } from "../modules/error";
+import { ErrorModule } from "../modules/error";
 
 export default () => {
   return (
-    <errorModule/>
+    <ErrorModule/>
   )
 }

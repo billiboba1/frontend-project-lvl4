@@ -9,6 +9,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   path: '/',
+  user: {},
 }
 
 const mainSlice = createSlice({

@@ -1,8 +1,8 @@
 import React from "react";
-import { chatModule } from "../modules/chat";
+import { ChatModule } from "../modules/chat";
 
 export default () => {
-  return (
-    <chatModule/>
+  return(
+    <ChatModule />
   )
 }

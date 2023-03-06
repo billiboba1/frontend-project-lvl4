@@ -3,12 +3,15 @@ import LoginPage from './pages/loginPage';
 import ErrorPage from './pages/errorPage';
 import ChatPage from './pages/chatPage';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation, Redirect} from 'react-router-dom';
 
 export const App = () => {
   const path = useSelector((state) => state.main.path);
+  const user = useSelector((state) => state.main.user);
+  const navigate = useNavigate();
+  const location = useLocation();
   // Возвращает метод store.dispatch() текущего хранилища
-  const navigate = (newPath) => useNavigate(newPath);
   const dispatch = useDispatch();
   return (
     <BrowserRouter>
