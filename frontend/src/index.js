@@ -4,12 +4,15 @@ import './index.css';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-
+import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
+import chatSlice from './modules/chat/api/chatSlice';
+import {addChannel, removeChannel, sendMessage, chooseChannel} from './modules/chat/api/chatSlice';
 
 const initialState = {
   path: '/',
   user: {},
+  channel
 }
 
 const mainSlice = createSlice({
@@ -22,13 +25,12 @@ const mainSlice = createSlice({
   },
 });
 
-const mainReducer = mainSlice.reducer;
-
-const store = configureStore({
-  reducer: {
-    main: mainReducer,
-  },
+const reducer = combineReducers({
+  chat: chatSlice,
+  main: mainSlice.reducer
 });
+
+const store = configureStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>

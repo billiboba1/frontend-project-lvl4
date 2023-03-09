@@ -1,0 +1,5 @@
+const ChannelComponent = (slice) => {
+  return(
+    
+  )
+}
