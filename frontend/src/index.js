@@ -12,7 +12,6 @@ import {addChannel, removeChannel, sendMessage, chooseChannel} from './modules/c
 const initialState = {
   path: '/',
   user: {},
-  channel
 }
 
 const mainSlice = createSlice({
@@ -30,7 +29,7 @@ const reducer = combineReducers({
   main: mainSlice.reducer
 });
 
-const store = configureStore(reducer);
+const store = configureStore({reducer});
 
 ReactDOM.render(
   <Provider store={store}>

@@ -21,6 +21,7 @@ const chatSlice = createSlice({
       delete state.channelsData[payload];
     },
     sendMessage(state, payload) {
+      //payload-obj
       state.channelsData[state.currentChannel].push(payload);
     },
     chooseChannel(state, payload) {
