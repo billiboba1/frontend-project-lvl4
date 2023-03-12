@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ChannelComponent from '../../../components/channelComponent';
-import ChannelsComponent from '../../../components/channelsComponent';
+import ChannelComponent from './channelComponent';
+import ChannelsComponent from './channelsComponent';
 
 export const chatComponent = () => {
   const navigate = useNavigate();
@@ -14,5 +14,5 @@ export const chatComponent = () => {
         <ChannelComponent />
       </div>
     </div>
-  )
+  );
 }

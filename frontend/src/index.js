@@ -26,7 +26,7 @@ const mainSlice = createSlice({
 
 const reducer = combineReducers({
   chat: chatSlice,
-  main: mainSlice.reducer
+  main: mainSlice.reducer,
 });
 
 const store = configureStore({reducer});

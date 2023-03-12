@@ -6,25 +6,25 @@ const initialState = {
     '#general': [],
     '#random': [],
   },
-  currentChannel: '',
+  currentChannel: '#general',
 }
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    addChannel(state, payload) {
+    addChannel: (state, payload) => {
       state.channels.push(payload);
-      state.channelsData.payload = [];
+      state.channelsData[payload] = [];
     },
-    removeChannel(state, payload) {
+    removeChannel: (state, payload) => {
       state = state.channels.filter((channel) => (channel !== payload));
       delete state.channelsData[payload];
     },
-    sendMessage(state, payload) {
+    sendMessage: (state, payload) => {
       //payload-obj
       state.channelsData[state.currentChannel].push(payload);
     },
-    chooseChannel(state, payload) {
+    chooseChannel:(state, payload) => {
       state.currentChannel = payload;
     },
   }
