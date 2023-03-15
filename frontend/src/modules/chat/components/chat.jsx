@@ -6,11 +6,11 @@ import ChannelsComponent from './channelsComponent';
 export const chatComponent = () => {
   const navigate = useNavigate();
   return (
-    <div className="chat row">
-      <div className="channels">
+    <div className="chat d-flex">
+      <div className="channels d-flex flex-column">
         <ChannelsComponent />
       </div>
-      <div className="channel">
+      <div className="channel d-flex flex-column">
         <ChannelComponent />
       </div>
     </div>

@@ -4,7 +4,7 @@ const ChannelsComponent = () => {
   const chatState = useSelector((state) => state.chat);
   console.log(chatState, chatState.channels);
   return (
-    <div>
+    <div className="channels-background d-flex flex-column">
       {chatState.channels.map((channel) => <button key={channel} className="btn btn-secondary">{channel}</button>)}
     </div>
   );
