@@ -4,9 +4,14 @@ body {
   background: url("../public/background.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
+  height: 100%;
 }
 
 .center {
   display: flex;
   align-items: center
+}
+
+.height-75 {
+  height: 75vh;
 }
