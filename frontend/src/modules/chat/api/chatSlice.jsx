@@ -7,14 +7,20 @@ const initialState = {
     '#random': [],
   },
   currentChannel: '#general',
+  //modalWindow: 'hidden',
 }
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    showModal: (state) => {
+      state.modalWindow = 'show';
+    },
     addChannel: (state, payload) => {
       state.channels.push(payload);
       state.channelsData[payload] = [];
+      state.modalWindow = 'hide';
     },
     removeChannel: (state, payload) => {
       state = state.channels.filter((channel) => (channel !== payload));
@@ -30,5 +36,5 @@ const chatSlice = createSlice({
   }
 });
 
-export const {addChannel, removeChannel, sendMessage, chooseChannel} = chatSlice.actions;
+export const {addChannel, removeChannel, sendMessage, chooseChannel, showModal} = chatSlice.actions;
 export default chatSlice.reducer;

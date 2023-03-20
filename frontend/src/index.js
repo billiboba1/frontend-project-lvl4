@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import chatSlice from './modules/chat/api/chatSlice';
-import {addChannel, removeChannel, sendMessage, chooseChannel} from './modules/chat/api/chatSlice';
+import {addChannel, removeChannel, sendMessage, chooseChannel, showModal} from './modules/chat/api/chatSlice';
 
 const initialState = {
   path: '/',

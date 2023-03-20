@@ -16,7 +16,7 @@ const ChannelComponent = () => {
       })}
       <form className="row" action="submit">
         <input type="text" placeholder="Введите сообщение" />
-        <button className="btn btn-success" onClick={(event) => {
+        <button className="btn btn-success" onSubmit={(event) => {
           if (event.target.value !== '') {
             dispatch(sendMessage({ user: event.target.value }))
           }

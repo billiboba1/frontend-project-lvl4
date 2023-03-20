@@ -1,12 +1,45 @@
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
+import { addChannel, showModal } from "../api/chatSlice";
+import cn from 'classnames';
 
 const ChannelsComponent = () => {
   const chatState = useSelector((state) => state.chat);
-  console.log(chatState, chatState.channels);
+  const dispatch = useDispatch();
+  const modalClasses = cn('modal', 'fade', chatState.modalWindow);
+  const Input = (<input className="inputChannel" type='text' placeholder='Введите канал' />)
   return (
-    <div className="channels-background d-flex flex-column">
-      {chatState.channels.map((channel) => <button key={channel} className="btn btn-secondary">{channel}</button>)}
-    </div>
+    <>
+      <div className={modalClasses} id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 className="modal-title" id="modalTitle">Добавить канал</h5>
+            </div>
+            <div className="modal-body">
+              <form action="submit">
+                <input className="inputChannel" type='text' placeholder='Введите канал' />
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onSubmit={(e) => dispatch(addChannel(chatState, e.target.value))}>Добавить</button>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="channels-background d-flex flex-column">
+        <div className="d-flex flex-row">
+          <div>Добавить канал</div>
+          <button type="click" onClick={() => {
+            dispatch(showModal());
+            console.log(modalClasses);
+            console.log(chatState);
+          }}>+</button>
+        </div>
+        {chatState.channels.map((channel) => <button key={channel} className="btn btn-secondary">{channel}</button>)}
+      </div>
+    </>
   );
 }
 
