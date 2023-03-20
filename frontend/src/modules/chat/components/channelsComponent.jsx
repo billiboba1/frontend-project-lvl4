@@ -29,15 +29,15 @@ const ChannelsComponent = () => {
         </div>
       </div>
       <div className="channels-background d-flex flex-column">
-        <div className="d-flex flex-row">
+        <div className="m-1 align-middle d-flex flex-row ">
           <div>Добавить канал</div>
-          <button type="click" onClick={() => {
+          <button className="m-1" data-bs-target="#modalCenter" data-bs-toggle="modal" onClick={() => {
             dispatch(showModal());
             console.log(modalClasses);
             console.log(chatState);
           }}>+</button>
         </div>
-        {chatState.channels.map((channel) => <button key={channel} className="btn btn-secondary">{channel}</button>)}
+        {chatState.channels.map((channel) => <button key={channel} className="btn btn-light text-dark m-1">{channel}</button>)}
       </div>
     </>
   );
