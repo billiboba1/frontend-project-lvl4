@@ -7,31 +7,28 @@ const initialState = {
     '#random': [],
   },
   currentChannel: '#general',
-  //modalWindow: 'hidden',
 }
 
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    showModal: (state) => {
-      state.modalWindow = 'show';
+    addChannel: (state, action) => {
+      console.log('addChannel');
+      console.log(action);
+      state.channels.push(action.payload);
+      state.channelsData[action.payload] = [];
     },
-    addChannel: (state, payload) => {
-      state.channels.push(payload);
-      state.channelsData[payload] = [];
-      state.modalWindow = 'hide';
+    removeChannel: (state, action) => {
+      state = state.channels.filter((channel) => (channel !== action.payload));
+      delete state.channelsData[action.payload];
     },
-    removeChannel: (state, payload) => {
-      state = state.channels.filter((channel) => (channel !== payload));
-      delete state.channelsData[payload];
-    },
-    sendMessage: (state, payload) => {
+    sendMessage: (state, action) => {
       //payload-obj
-      state.channelsData[state.currentChannel].push(payload);
+      state.channelsData[state.currentChannel].push(action.payload);
     },
-    chooseChannel:(state, payload) => {
-      state.currentChannel = payload;
+    chooseChannel:(state, action) => {
+      state.currentChannel = action.payload;
     },
   }
 });
