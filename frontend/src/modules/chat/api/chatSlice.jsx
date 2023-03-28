@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  channels: ['#general', '#random'],
+  channels: ['general', 'random'],
   channelsData: {
-    '#general': [],
-    '#random': [],
+    'general': [],
+    'random': [],
   },
-  currentChannel: '#general',
+  currentChannel: 'general',
 }
 
 const chatSlice = createSlice({

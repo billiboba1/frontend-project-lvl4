@@ -7,19 +7,19 @@ const ChannelsComponent = () => {
   return (
     <>
       <div className="channels-background d-flex flex-column">
-        <div className="m-1 align-middle d-flex flex-column ">
+        <div className="m-1 my-3 w-100 align-middle d-flex flex-column">
           <div>Добавить канал</div>
           <form action="submit" onSubmit={(e) => {
               e.preventDefault();
               dispatch(addChannel(e.target.querySelector('input').value))
               console.log(e.target.querySelector('input').value);
             }}
-            className="flex flex-column">
-            <input type="text" placeholder="Введите канал"/>
-            <button type="submit" className="btn row align-middle btn-success">+</button>
+            className="w-100 flex flex-column">
+            <input className="w-100 form-control" type="text" placeholder="Введите канал"/>
+            <button type="submit" className="w-100 btn align-middle btn-success">Добавить</button>
           </form>
         </div>
-        {chatState.channels.map((channel) => <button key={channel} className="btn btn-light text-dark m-1">{channel}</button>)}
+        {chatState.channels.map((channel) => <button key={channel} className="w-100 btn btn-light text-dark m-1"># {channel}</button>)}
       </div>
     </>
   );
