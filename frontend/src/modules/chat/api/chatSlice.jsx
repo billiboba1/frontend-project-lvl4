@@ -14,10 +14,12 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     addChannel: (state, action) => {
-      console.log('addChannel');
-      console.log(action);
-      state.channels.push(action.payload);
-      state.channelsData[action.payload] = [];
+      if (!state.channels.includes(action.payload)) {
+        console.log('addChannel');
+        console.log(action);
+        state.channels.push(action.payload);
+        state.channelsData[action.payload] = [];
+      }
     },
     removeChannel: (state, action) => {
       state = state.channels.filter((channel) => (channel !== action.payload));
