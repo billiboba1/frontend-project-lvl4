@@ -1,1 +1,1 @@
-export { chatComponent as ChatModule } from "./components/chat";
+export { ChatComponent as ChatModule } from "./components/chat";

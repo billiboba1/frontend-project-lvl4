@@ -25,7 +25,7 @@ const ChannelComponent = () => {
           })}
         </div>
       </div>
-      <form className="w-100" action="submit" onSubmit={(e) => {
+      <form className="mt-2 w-100" action="submit" onSubmit={(e) => {
         e.preventDefault();
         const input = e.target.querySelector('input');
         if (input.value !== '') {
