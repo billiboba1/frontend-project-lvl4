@@ -3,6 +3,6 @@ import { LoginModule } from '../modules/login/index.js';
 
 export default () => {
   return (
-    <LoginModule/>
+    <LoginModule />
   )
 }

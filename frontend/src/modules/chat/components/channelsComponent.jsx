@@ -7,7 +7,7 @@ const ChannelsComponent = () => {
   return (
     <>
       <div className="channels-background h-100 d-flex flex-column justify-content-center">
-        <div className="mb-3 mt-0 w-100 align-middle d-flex flex-column">
+        <div className="mb-2 w-100 align-middle d-flex flex-column">
           <div>Добавить канал</div>
           <form action="submit" onSubmit={(e) => {
             const input = e.target.querySelector('input');

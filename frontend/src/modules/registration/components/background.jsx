@@ -8,4 +8,4 @@ const BackgroundComponent = () => {
   )
 }
 
-export { BackgroundComponent as LoginModule };
+export { BackgroundComponent as RegistrationModule };

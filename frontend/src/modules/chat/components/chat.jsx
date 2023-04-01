@@ -6,14 +6,19 @@ import ChannelsComponent from './channelsComponent';
 export const ChatComponent = () => {
   const navigate = useNavigate();
   console.log(localStorage.token, !localStorage.token);
-  if (!localStorage.token) {
-    //React.useEffect(() => navigate('/login'));
-  }
+  React.useEffect(() => {
+    if (!localStorage.token) {
+      navigate('/login');
+    }
+  });
   return (
     <>
       <div className="d-flex flex-row justify-content-between px-3 py-2 footer">
         <p className="d-flex fs-4 align-items-center mb-0">Chat</p>
-        <button type="button" className="btn btn-dark" onClick={() => navigate('/login')}>Выйти</button>
+        <button type="button" className="btn btn-dark" onClick={() => {
+          delete localStorage.token;
+          //navigate('/login');
+        }}>Выйти</button>
       </div>
       <div className="mt-2 chat h-85 d-inline-flex w-100 justify-content-around rounded-3">
         <div className="w-30 bg-dark p-4 rounded-4 channels d-flex flex-column">
