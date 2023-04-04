@@ -5,22 +5,31 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router-dom';
 import chatSlice from './modules/chat/api/chatSlice';
 import {addChannel, removeChannel, sendMessage, chooseChannel, showModal} from './modules/chat/api/chatSlice';
 
 const initialState = {
   path: '/',
-  user: {},
+  token: '',
+  username: '',
 }
 
 const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    login: (state) => state.path = 'login',
-    chat: (state) => state.path = '/',
-    error: (state) => state.path = '404',
+    logIn: (state, action) => {
+      const { username, token } = action.payload;
+      state.token = token;
+      state.username = username;
+    },
+    logOut: (state) => {
+      state.token = '';
+      state.usernme = '';
+    },
+    toLogin: (state) => state.path = 'login',
+    toChat: (state) => state.path = '/',
+    toError: (state) => state.path = '404',
   },
 });
 
@@ -39,3 +48,6 @@ ReactDOM.render(
 );
 
 reportWebVitals();
+
+export default mainSlice.reducer;
+export const { logIn, logOut, toLogin, toChat, toError } = mainSlice.actions;

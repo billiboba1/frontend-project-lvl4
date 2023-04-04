@@ -2,9 +2,13 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import mainSlice from '..';
+import { logIn } from '..';
 
 export default () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className='w-100'>
       <h2 className='text-center'>Войти</h2>
@@ -23,7 +27,9 @@ export default () => {
           console.log({ username: values.username, password: values.password });
           axios.post('/api/v1/login', { username: values.username, password: values.password }).then((response) => {
             console.log(response.data);
-            localStorage.setItem(response.data, { token: response.data, username: values.username, password: values.password });
+            dispatch(logIn({ username: values.username, token: response.data.token }));
+            localStorage.setItem(response.data.token, values.username);
+            navigate('/');
           });
         }}
       >

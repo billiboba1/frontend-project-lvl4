@@ -15,8 +15,6 @@ const chatSlice = createSlice({
   reducers: {
     addChannel: (state, action) => {
       if (!state.channels.includes(action.payload)) {
-        console.log('addChannel');
-        console.log(action);
         state.channels.push(action.payload);
         state.channelsData[action.payload] = [];
       }
