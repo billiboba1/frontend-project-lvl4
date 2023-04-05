@@ -2,9 +2,12 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { logIn } from '..';
+import { useDispatch } from 'react-redux';
 
 export default () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
   <div>
     <h2 className='text-center'>Регистрация</h2>
@@ -27,11 +30,16 @@ export default () => {
       }}
       onSubmit={(values, { setSubmitting }) => {
         console.log({ username: values.username, password: values.password});
-        axios.post('/api/v1/signup', { username: values.username, password: values.password}).then((response) => {
-          console.log(response.data);
-          localStorage.setItem(response.data, {token: response.data, username: values.username, password: values.password});
-          navigate('/');
-        });
+        try {
+          axios.post('/api/v1/signup', { username: values.username, password: values.password}).then((response) => {
+            console.log(response.data);
+            dispatch(logIn({ username: values.username, token: response.data.token }));
+            localStorage.setItem(response.data, {token: response.data, username: values.username, password: values.password});
+            navigate('/');
+          });
+        } catch (e) {
+          //user exists
+        }
       }}
     >
       {({ isSubmitting }) => (

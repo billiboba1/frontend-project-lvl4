@@ -4,12 +4,23 @@ import ChannelComponent from './channelComponent';
 import ChannelsComponent from './channelsComponent';
 import { logIn, logOut } from "../../..";
 import { useSelector, useDispatch } from "react-redux";
+import axios from 'axios';
 
 export const ChatComponent = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.main.token);
+  const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
   console.log('localstorage:', localStorage.getItem('token'), "\nif:", !localStorage.getItem(token));
+  try {
+    const data = axios.get('api/v2/data', {token: token, username: username}).then((res)=> {
+      return res.data;
+    });
+    console.log('data:', data);
+  } catch (e) {
+    //err
+    console.log(e);
+  }
   React.useEffect(() => {
     if (!localStorage.getItem(token)) {
       console.log('toLogin');
