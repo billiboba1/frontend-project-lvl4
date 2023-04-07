@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Server } from "socket.io";
-import WebSocket from 'ws';
 import axios from "axios";
+//import WebSocket from 'websocket';
 
 const initialState = {
   channels: ['general', 'random'],
@@ -12,30 +11,16 @@ const initialState = {
   currentChannel: 'general',
 }
 
-const socket = new WebSocket('ws://localhost:5001');
-socket.on('open', (e) => {
-  try {
-    const data = axios.get('api/v2/data', { Authorization: token }).then((res) => {
-      return res.data;
-    });
-    console.log('data:', data);
-  } catch (error) {
-    //
-    console.log(error);
-  }
-});
-socket.on('close', (e) => {
-  console.log('closed', e);
-});
-socket.on('message', (e) => {
-
-});
-
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
     addChannel: (state, action) => {
+      try {
+        //socket.newChannel(action.payload);
+      } catch (e) {
+        console.log('newChannel', e);
+      }
       if (!state.channels.includes(action.payload)) {
         state.channels.push(action.payload);
         state.channelsData[action.payload] = [];
@@ -47,7 +32,12 @@ const chatSlice = createSlice({
     },
     sendMessage: (state, action) => {
       //payload-obj
-      state.channelsData[state.currentChannel].push(action.payload);
+      try {
+        //socket.newMessage(action.payload);
+        state.channelsData[state.currentChannel].push(action.payload);
+      } catch (e) {
+        console.log('sending:', e);
+      }
     },
     chooseChannel: (state, action) => {
       state.currentChannel = action.payload;
