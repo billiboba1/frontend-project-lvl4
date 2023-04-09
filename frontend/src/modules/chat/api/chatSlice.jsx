@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from "axios";
-//import WebSocket from 'websocket';
+import init from './socket';
+import { io } from 'socket.io-client';
+
+const socket = io();
+init(socket);
 
 const initialState = {
   channels: ['general', 'random'],
@@ -17,7 +21,7 @@ const chatSlice = createSlice({
   reducers: {
     addChannel: (state, action) => {
       try {
-        //socket.newChannel(action.payload);
+        socket.newChannel(action.payload);
       } catch (e) {
         console.log('newChannel', e);
       }

@@ -7,32 +7,6 @@ import { Provider } from 'react-redux';
 import { configureStore, createSlice, combineReducers } from '@reduxjs/toolkit';
 import chatSlice from './modules/chat/api/chatSlice';
 import { addChannel, removeChannel, sendMessage, chooseChannel, showModal } from './modules/chat/api/chatSlice';
-import { io } from 'socket.io-client';
-
-const init = (socket) => {
-  // Работа с сокетами вне реакта, это уровень инициализации приложения
-  socket.on('open', (action) => {
-    console.log('opened');
-  });
-  socket.on('message', (action) => {
-    console.log('message');
-  });
-  socket.on('close', (action) => {
-    console.log('closed');
-  });
-  socket.on('newMessage', (action) => {
-    console.log('newMessage:', action.payload);
-  });
-  socket.on('newChannel', (action) => {
-    console.log('newChannel:', action);
-  });
-  socket.on('removeChannel', (action) => {
-    console.log('removeChannel:', action);
-  });
-  socket.on('renameChannel', (action) => {
-    console.log('renameChannel:', action);
-  });
-};
 
 const initialState = {
   path: '/',
@@ -68,22 +42,14 @@ const store = configureStore({ reducer });
 
 const app = () => {
   const root = ReactDOM.createRoot(document.querySelector('#root'));
-  const socket = io();
-  init(socket);
   root.render(
     <Provider store={store}>
       <App />
-    </Provider>);
+    </Provider>
+  );
 };
 
 app();
-
-/*ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);*/
 
 reportWebVitals();
 
