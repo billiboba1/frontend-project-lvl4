@@ -6,18 +6,24 @@ import { logIn, logOut } from "../../..";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 
-export const ChatComponent = () => {
+export const ChatComponent = async () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.main.token);
+  console.log(token);
   const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
-  console.log('localstorage:', localStorage.getItem('token'), "\nif:", !localStorage.getItem(token));
   React.useEffect(() => {
     if (!localStorage.getItem(token)) {
       console.log('toLogin');
       navigate('/login');
     }
   });
+  const data = await axios.get('/api/v1/data', { Authorization: token });
+  const data2 = await axios.get('/api/v1/data', { headers: token });
+  const data3 = await axios.get('/api/v1/data', { headers: { Authorization: token } });
+  console.log(data);
+  console.log(data2);
+  console.log(data3);
   return (
     <>
       <div className="d-flex flex-row justify-content-between px-3 py-2 footer">

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from "axios";
 import init from './socket';
 import { io } from 'socket.io-client';
+import { useSelector } from 'react-redux';
 
 const socket = io();
 init(socket);
@@ -21,13 +22,13 @@ const chatSlice = createSlice({
   reducers: {
     addChannel: (state, action) => {
       try {
-        socket.newChannel(action.payload);
+        if (!state.channels.includes(action.payload)) {
+          socket.emit("newChannel", action.payload);
+          state.channels.push(action.payload);
+          state.channelsData[action.payload] = [];
+        }
       } catch (e) {
         console.log('newChannel', e);
-      }
-      if (!state.channels.includes(action.payload)) {
-        state.channels.push(action.payload);
-        state.channelsData[action.payload] = [];
       }
     },
     removeChannel: (state, action) => {
@@ -37,7 +38,7 @@ const chatSlice = createSlice({
     sendMessage: (state, action) => {
       //payload-obj
       try {
-        //socket.newMessage(action.payload);
+        socket.emit('newMessage', action.payload);
         state.channelsData[state.currentChannel].push(action.payload);
       } catch (e) {
         console.log('sending:', e);
