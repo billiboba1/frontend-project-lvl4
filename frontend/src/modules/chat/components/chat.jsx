@@ -6,24 +6,22 @@ import { logIn, logOut } from "../../..";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 
-export const ChatComponent = async () => {
+export const ChatComponent = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.main.token);
-  console.log(token);
+  console.log(token, !localStorage.getItem(token));
   const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
-  React.useEffect(() => {
+  React.useEffect(async () => {
     if (!localStorage.getItem(token)) {
       console.log('toLogin');
       navigate('/login');
+    } else {
+      const data = await axios.get('/api/v1/data', { headers: { "Authorization": `Bearer ${token}` } });
+      const data2 = axios.get('/api/v1/data', { headers: { "Authorization": `Bearer ${token}` } }).then((res) => res.data);
+      console.log('data', data, '\ndata2', data2);
     }
   });
-  const data = await axios.get('/api/v1/data', { Authorization: token });
-  const data2 = await axios.get('/api/v1/data', { headers: token });
-  const data3 = await axios.get('/api/v1/data', { headers: { Authorization: token } });
-  console.log(data);
-  console.log(data2);
-  console.log(data3);
   return (
     <>
       <div className="d-flex flex-row justify-content-between px-3 py-2 footer">
