@@ -2,13 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from "axios";
 import init from './socket';
 import { io } from 'socket.io-client';
-import { useSelector } from 'react-redux';
 
 const socket = io();
 init(socket);
 
 const initialState = {
-  channels: ['general', 'random'],
+  channels: { 'general': 1, 'random': 2},
   channelsData: {
     'general': [],
     'random': [],
@@ -22,10 +21,12 @@ const chatSlice = createSlice({
   reducers: {
     addChannel: (state, action) => {
       try {
-        if (!state.channels.includes(action.payload)) {
-          socket.emit("newChannel", action.payload);
-          state.channels.push(action.payload);
-          state.channelsData[action.payload] = [];
+        const value = action.payload;
+        if (!state.channels.includes(value)) {
+          const id = state.channels.length + 1;
+          socket.emit("newChannel", {'id': id, 'name': value});
+          state.channels[value] = id;
+          state.channelsData[value] = [];
         }
       } catch (e) {
         console.log('newChannel', e);
@@ -38,7 +39,7 @@ const chatSlice = createSlice({
     sendMessage: (state, action) => {
       //payload-obj
       try {
-        socket.emit('newMessage', action.payload);
+        socket.emit('newMessage', {});
         state.channelsData[state.currentChannel].push(action.payload);
       } catch (e) {
         console.log('sending:', e);
@@ -47,6 +48,9 @@ const chatSlice = createSlice({
     chooseChannel: (state, action) => {
       state.currentChannel = action.payload;
     },
+    /*setState: (state, action) => {
+      state.
+    }*/
   }
 });
 

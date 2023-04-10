@@ -21,7 +21,7 @@ const ChannelsComponent = () => {
           </form>
         </div>
         <div className="w-100 overflow-auto mb-auto">
-          {chatState.channels.map((channel) => <button onClick={
+          {Object.keys(chatState.channels).map((channel) => <button onClick={
             () => dispatch(chooseChannel(channel))
           } key={channel} className="w-100 btn btn-light text-dark my-1"># {channel}</button>)}
         </div>
