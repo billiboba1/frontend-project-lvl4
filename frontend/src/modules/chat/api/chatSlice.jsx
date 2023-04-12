@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from "axios";
-import init from './socket';
-import { io } from 'socket.io-client';
-
-const socket = io();
-init(socket);
 
 const initialState = {
   channels: { 'general': 1, 'random': 2},
@@ -20,13 +15,13 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     addChannel: (state, action) => {
+      console.log(action);
+      const { id, name } = action.payload;
+      console.log(id, name);
       try {
-        const value = action.payload;
-        if (!state.channels.includes(value)) {
-          const id = state.channels.length + 1;
-          socket.emit("newChannel", {'id': id, 'name': value});
-          state.channels[value] = id;
-          state.channelsData[value] = [];
+        if (!state.channels.hasOwnProperty(name)) {
+          state.channels[name] = id;
+          state.channelsData[name] = [];
         }
       } catch (e) {
         console.log('newChannel', e);
@@ -39,7 +34,7 @@ const chatSlice = createSlice({
     sendMessage: (state, action) => {
       //payload-obj
       try {
-        socket.emit('newMessage', {});
+        //socket.emit('newMessage', {});
         state.channelsData[state.currentChannel].push(action.payload);
       } catch (e) {
         console.log('sending:', e);
@@ -48,11 +43,11 @@ const chatSlice = createSlice({
     chooseChannel: (state, action) => {
       state.currentChannel = action.payload;
     },
-    /*setState: (state, action) => {
-      state.
-    }*/
+    setState: (state, action) => {
+      console.log(action.payload);
+    },
   }
 });
 
-export const { addChannel, removeChannel, sendMessage, chooseChannel, showModal } = chatSlice.actions;
+export const { addChannel, removeChannel, sendMessage, chooseChannel, setState } = chatSlice.actions;
 export default chatSlice.reducer;

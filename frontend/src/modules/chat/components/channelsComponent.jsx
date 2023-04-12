@@ -1,9 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useContext } from "react";
 import { addChannel, chooseChannel } from "../api/chatSlice";
+import { SocketContext } from "./chat";
 
 const ChannelsComponent = () => {
   const chatState = useSelector((state) => state.chat);
   const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
+  console.log(socket);
   return (
     <>
       <div className="channels-background h-100 d-flex flex-column justify-content-center">
@@ -12,7 +16,7 @@ const ChannelsComponent = () => {
           <form action="submit" onSubmit={(e) => {
             const input = e.target.querySelector('input');
             e.preventDefault();
-            dispatch(addChannel(input.value))
+            socket.emit('newChannel', {id: chatState.channels.length + 1, name: input.value});
             input.value = '';
           }}
             className="w-100 flex flex-column">
@@ -21,9 +25,9 @@ const ChannelsComponent = () => {
           </form>
         </div>
         <div className="w-100 overflow-auto mb-auto">
-          {Object.keys(chatState.channels).map((channel) => <button onClick={
+          {Object.keys(chatState.channels).map((channel, i) => <button onClick={
             () => dispatch(chooseChannel(channel))
-          } key={channel} className="w-100 btn btn-light text-dark my-1"># {channel}</button>)}
+          } key={i + 1} className="w-100 btn btn-light text-dark my-1"># {channel}</button>)}
         </div>
       </div>
     </>

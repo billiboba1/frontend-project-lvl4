@@ -38,7 +38,7 @@ export default () => {
             navigate('/');
           });
         } catch (e) {
-          //user exists
+          navigate('/login');
         }
       }}
     >

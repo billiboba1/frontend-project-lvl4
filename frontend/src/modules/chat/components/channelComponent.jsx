@@ -1,11 +1,15 @@
 import { useSelector, useDispatch } from "react-redux"
+import { useContext } from "react";
 import { sendMessage } from "../api/chatSlice";
+import { SocketContext } from "./chat";
 
 const ChannelComponent = () => {
   const chatState = useSelector((state) => state.chat);
   const dispatch = useDispatch();
+  const mainState = useSelector((state) => state.main);
+  const socket = useContext(SocketContext);
+  console.log(socket);
   const { currentChannel } = chatState;
-  console.log(chatState, chatState.channelsData, currentChannel);
   return (
     <>
       <div className="d-inline-flex justify-content-center border border-light border-bottom-0 rounded-top">
@@ -29,7 +33,7 @@ const ChannelComponent = () => {
         e.preventDefault();
         const input = e.target.querySelector('input');
         if (input.value !== '') {
-          dispatch(sendMessage({ user: input.value }));
+          socket.emit('newMessage', {id: chatState.channels[currentChannel], name: mainState.username, token: mainState.token, message: input.value});
           input.value = '';
         }
       }}>

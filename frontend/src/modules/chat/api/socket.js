@@ -1,5 +1,9 @@
-export default async (socket) => {
-  // Работа с сокетами вне реакта, это уровень инициализации приложения
+import { useDispatch } from "react-redux";
+import { addChannel, sendMessage, removeChannel } from "./chatSlice";
+
+export default (socket) => {
+  const dispatch = useDispatch();
+
   socket.on('open', (action) => {
     console.log('opened');
   });
@@ -11,12 +15,15 @@ export default async (socket) => {
   });
   socket.on('newMessage', (action) => {
     console.log('newMessage:', action.payload);
+    dispatch(sendMessage(action.payload));
   });
   socket.on('newChannel', (action) => {
     console.log('newChannel:', action);
+    dispatch(addChannel(action.payload));
   });
   socket.on('removeChannel', (action) => {
     console.log('removeChannel:', action);
+    dispatch(removeChannel(action.payload));
   });
   socket.on('renameChannel', (action) => {
     console.log('renameChannel:', action);
