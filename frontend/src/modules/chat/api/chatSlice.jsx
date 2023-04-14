@@ -32,12 +32,11 @@ const chatSlice = createSlice({
       delete state.channelsData[action.payload];
     },
     sendMessage: (state, action) => {
-      //payload-obj
+      console.log(action);
       try {
-        //socket.emit('newMessage', {});
         state.channelsData[state.currentChannel].push(action.payload);
       } catch (e) {
-        console.log('sending:', e);
+        console.log('sending message:', e);
       }
     },
     chooseChannel: (state, action) => {

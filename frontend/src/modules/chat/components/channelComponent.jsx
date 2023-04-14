@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useContext } from "react";
-import { sendMessage } from "../api/chatSlice";
 import { SocketContext } from "./chat";
 
 const ChannelComponent = () => {
@@ -18,11 +17,12 @@ const ChannelComponent = () => {
       <div className="h-75 oveflow-auto">
         <div className="h-100 border border-light rounded-bottom border-top-0 overflow-auto">
           {chatState.channelsData[currentChannel].map((data, i) => {
-            const user = Object.keys(data)[0];
-            const message = data[user];
+            console.log(data);
+            console.log(chatState.channelsData);
+            const {name, message} = data;
             return (
               <div className="ms-1 mb-2" key={i}>
-                <b className="m-0 user row">{user}</b>
+                <b className="m-0 user row">{name}</b>
                 <p className="m-0 ms-2 message row">{message}</p>
               </div>
             )
@@ -31,8 +31,10 @@ const ChannelComponent = () => {
       </div>
       <form className="mt-2 w-100" action="submit" onSubmit={(e) => {
         e.preventDefault();
+        console.log(socket);
         const input = e.target.querySelector('input');
         if (input.value !== '') {
+          console.log('message', input.value); 
           socket.emit('newMessage', {id: chatState.channels[currentChannel], name: mainState.username, token: mainState.token, message: input.value});
           input.value = '';
         }

@@ -7,7 +7,6 @@ const ChannelsComponent = () => {
   const chatState = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
-  console.log(socket);
   return (
     <>
       <div className="channels-background h-100 d-flex flex-column justify-content-center">

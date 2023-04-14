@@ -21,8 +21,8 @@ export const ChatComponent = () => {
   const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
   socket.on('newMessage', (action) => {
-    console.log('newMessage:', action.payload);
-    dispatch(sendMessage(action.payload));
+    console.log('newMessage:', action);
+    dispatch(sendMessage(action));
   });
   socket.on('newChannel', (action) => {
     console.log('newChannel:', action);

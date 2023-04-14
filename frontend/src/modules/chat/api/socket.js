@@ -14,9 +14,12 @@ export default (socket) => {
     console.log('closed');
   });
   socket.on('newMessage', (action) => {
-    console.log('newMessage:', action.payload);
-    dispatch(sendMessage(action.payload));
+    console.log('newMessage:', action);
+    //dispatch(sendMessage(action.payload));
   });
+  socket.on('sendMessage', (action) => {
+    console.log('myMessage:', action);
+  })
   socket.on('newChannel', (action) => {
     console.log('newChannel:', action);
     dispatch(addChannel(action.payload));
