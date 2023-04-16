@@ -17,8 +17,6 @@ const ChannelComponent = () => {
       <div className="h-75 oveflow-auto">
         <div className="h-100 border border-light rounded-bottom border-top-0 overflow-auto">
           {chatState.channelsData[currentChannel].map((data, i) => {
-            console.log(data);
-            console.log(chatState.channelsData);
             const {name, message} = data;
             return (
               <div className="ms-1 mb-2" key={i}>
@@ -34,8 +32,8 @@ const ChannelComponent = () => {
         console.log(socket);
         const input = e.target.querySelector('input');
         if (input.value !== '') {
-          console.log('message', input.value); 
-          socket.emit('newMessage', {id: chatState.channels[currentChannel], name: mainState.username, token: mainState.token, message: input.value});
+          console.log('id', chatState, chatState.channels[currentChannel]);
+          socket.emit('newMessage', {channel: currentChannel, name: mainState.username, message: input.value});
           input.value = '';
         }
       }}>

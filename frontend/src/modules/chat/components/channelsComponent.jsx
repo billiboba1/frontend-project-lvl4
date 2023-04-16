@@ -15,7 +15,7 @@ const ChannelsComponent = () => {
           <form action="submit" onSubmit={(e) => {
             const input = e.target.querySelector('input');
             e.preventDefault();
-            socket.emit('newChannel', {id: chatState.channels.length + 1, name: input.value});
+            socket.emit('newChannel', { name: input.value });
             input.value = '';
           }}
             className="w-100 flex flex-column">
@@ -24,7 +24,7 @@ const ChannelsComponent = () => {
           </form>
         </div>
         <div className="w-100 overflow-auto mb-auto">
-          {Object.keys(chatState.channels).map((channel, i) => <button onClick={
+          {chatState.channels.map((channel, i) => <button onClick={
             () => dispatch(chooseChannel(channel))
           } key={i + 1} className="w-100 btn btn-light text-dark my-1"># {channel}</button>)}
         </div>

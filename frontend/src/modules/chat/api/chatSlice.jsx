@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from "axios";
 
 const initialState = {
-  channels: { 'general': 1, 'random': 2},
+  channels: [ 'general', 'random' ],
   channelsData: {
     'general': [],
     'random': [],
@@ -16,11 +16,10 @@ const chatSlice = createSlice({
   reducers: {
     addChannel: (state, action) => {
       console.log(action);
-      const { id, name } = action.payload;
-      console.log(id, name);
+      const { name } = action.payload;
       try {
-        if (!state.channels.hasOwnProperty(name)) {
-          state.channels[name] = id;
+        if (!state.channels.includes(name)) {
+          state.channels.push(name);
           state.channelsData[name] = [];
         }
       } catch (e) {

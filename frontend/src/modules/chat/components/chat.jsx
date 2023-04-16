@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 import init from '../api/socket';
 import { io } from 'socket.io-client';
-import { addChannel, sendMessage, removeChannel, setState} from "../api/chatSlice";
+import { addChannel, sendMessage, removeChannel, chooseChannel } from "../api/chatSlice";
 
 
 const socket = io();
@@ -17,7 +17,6 @@ export const SocketContext = React.createContext(socket);
 export const ChatComponent = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.main.token);
-  console.log(token, !localStorage.getItem(token));
   const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
   socket.on('newMessage', (action) => {
@@ -42,8 +41,23 @@ export const ChatComponent = () => {
     } else {
       try {
         axios.get('/api/v1/data', { headers: { "Authorization": `Bearer ${token}` } })
-        .then((res) => res.data)
-        .then((data) => dispatch(setState(data)));
+          .then((res) => res.data)
+          .then((data) => {
+            console.log(data);
+            data.channels.forEach((channelData) => {
+              const { name } = channelData;
+              console.log(channelData, name);
+              if (!['general', 'random'].includes(name)) {
+                dispatch(addChannel({name}));
+                console.log('added ', name);
+              }
+            });
+            data.messages.forEach((messageData) => {
+              const { channel, message, name } = messageData;
+              dispatch(chooseChannel(channel));
+              dispatch(sendMessage({channel, message, name}));
+            });
+          });
       } catch (e) {
         console.log(e);
       }
@@ -61,10 +75,10 @@ export const ChatComponent = () => {
       </div>
       <div className="mt-2 chat h-85 d-inline-flex w-100 justify-content-around rounded-3">
         <div className="w-30 bg-dark p-4 rounded-4 channels d-flex flex-column">
-          <ChannelsComponent/>
+          <ChannelsComponent />
         </div>
         <div className="bg-dark p-4 rounded-4 channel d-flex flex-column w-50">
-          <ChannelComponent/>
+          <ChannelComponent />
         </div>
       </div>
     </>
