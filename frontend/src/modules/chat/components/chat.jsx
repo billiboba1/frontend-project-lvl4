@@ -20,19 +20,13 @@ export const ChatComponent = () => {
   const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
   socket.on('newMessage', (action) => {
-    console.log('newMessage:', action);
     dispatch(sendMessage(action));
   });
   socket.on('newChannel', (action) => {
-    console.log('newChannel:', action);
     dispatch(addChannel(action));
   });
   socket.on('removeChannel', (action) => {
-    console.log('removeChannel:', action);
-    dispatch(removeChannel(action.payload));
-  });
-  socket.on('renameChannel', (action) => {
-    console.log('renameChannel:', action);
+    dispatch(removeChannel(action));
   });
   React.useEffect(async () => {
     if (!localStorage.getItem(token)) {
@@ -48,14 +42,14 @@ export const ChatComponent = () => {
               const { name } = channelData;
               console.log(channelData, name);
               if (!['general', 'random'].includes(name)) {
-                dispatch(addChannel({name}));
+                dispatch(addChannel({ name }));
                 console.log('added ', name);
               }
             });
             data.messages.forEach((messageData) => {
               const { channel, message, name } = messageData;
               dispatch(chooseChannel(channel));
-              dispatch(sendMessage({channel, message, name}));
+              dispatch(sendMessage({ channel, message, name }));
             });
           });
       } catch (e) {
@@ -72,7 +66,7 @@ export const ChatComponent = () => {
           dispatch(logOut());
           navigate('/login');
         }}>Выйти</button>
-      </div>
+      </div>      
       <div className="mt-2 chat h-85 d-inline-flex w-100 justify-content-around rounded-3">
         <div className="w-30 bg-dark p-4 rounded-4 channels d-flex flex-column">
           <ChannelsComponent />

@@ -8,6 +8,7 @@ const initialState = {
     'random': [],
   },
   currentChannel: 'general',
+  deletedChannels: 0,
 }
 
 const chatSlice = createSlice({
@@ -27,8 +28,10 @@ const chatSlice = createSlice({
       }
     },
     removeChannel: (state, action) => {
-      state = state.channels.filter((channel) => (channel !== action.payload));
-      delete state.channelsData[action.payload];
+      const choosenChannel = state.channels[action.payload.id - 1 - state.deletedChannels];
+      state.channels = state.channels.filter((channel) => (channel !== choosenChannel));
+      delete state.channelsData[choosenChannel];
+      state.deletedChannels += 1;
     },
     sendMessage: (state, action) => {
       console.log(action);

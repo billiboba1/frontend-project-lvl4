@@ -7,7 +7,6 @@ const ChannelComponent = () => {
   const dispatch = useDispatch();
   const mainState = useSelector((state) => state.main);
   const socket = useContext(SocketContext);
-  console.log(socket);
   const { currentChannel } = chatState;
   return (
     <>
@@ -32,7 +31,6 @@ const ChannelComponent = () => {
         console.log(socket);
         const input = e.target.querySelector('input');
         if (input.value !== '') {
-          console.log('id', chatState, chatState.channels[currentChannel]);
           socket.emit('newMessage', {channel: currentChannel, name: mainState.username, message: input.value});
           input.value = '';
         }
