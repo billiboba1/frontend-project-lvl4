@@ -14,9 +14,13 @@ const ChannelsComponent = () => {
     collapse: {},
     modal: false,
   });
-  console.log(open, open[0]);
-  const handleShow = () => setOpen(open.modal = true);
-  const handleClose = () => setOpen(open.modal = false);
+  console.log(open);
+  const handleShow = () => {
+    setOpen({ collapse: open.collapse, modal: true });
+  }
+  const handleClose = () => {
+    setOpen({ collapse: open.collapse, modal: false });
+  };
   const chatState = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
@@ -40,7 +44,7 @@ const ChannelsComponent = () => {
             Добавить канал
           </Button>
 
-          <Modal show={open} onHide={handleClose}>
+          <Modal show={open.modal} onHide={handleClose}>
             <Modal.Body>
               <form action="submit" onSubmit={(e) => {
                 const input = e.target.querySelector('input');
@@ -66,7 +70,10 @@ const ChannelsComponent = () => {
                   }
                 } key={i} className={focus(channel)}># {channel}</button>)
             } else {
-              setOpen(open.collapse[channel] = false);
+              console.log(open.collapse[channel], open.collapse[channel] !== false);
+              if (!open.collapse.hasOwnProperty([channel])) {
+                setOpen({ collapse: Object.assign(open.collapse, { [channel]: false }), modal: open.modal });
+              }
               return (
                 <div className={focus(channel)}>
                   <button onClick={
@@ -75,9 +82,9 @@ const ChannelsComponent = () => {
                     # {channel}
                   </button>
                   <button className="w-25 border-0 rounded-end rounded-4 btn-dark p-0" onClick={() => {
-                    console.log('before: ', open);
-                    setOpen(open.collapse[channel] = !open.collapse[channel]);
-                    console.log('after: ', open);
+                    console.log('before: ', open.collapse);
+                    setOpen({ collapse: Object.assign(open.collapse, { [channel]: !open.collapse[channel] }), modal: open.modal });
+                    console.log('after: ', open.collapse);
                   }} aria-controls={`collapse-${channel}`} aria-expanded={open.collapse[channel]}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
