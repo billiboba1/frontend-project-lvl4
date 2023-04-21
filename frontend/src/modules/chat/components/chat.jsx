@@ -8,7 +8,22 @@ import axios from 'axios';
 import init from '../api/socket';
 import { io } from 'socket.io-client';
 import { addChannel, sendMessage, removeChannel, chooseChannel } from "../api/chatSlice";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
+
+/*
+toast.success('🦄 Wow so easy!', {
+  position: "top-center",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+  });
+*/
 
 const socket = io();
 
@@ -66,7 +81,7 @@ export const ChatComponent = () => {
           dispatch(logOut());
           navigate('/login');
         }}>Выйти</button>
-      </div>      
+      </div>
       <div className="mt-2 chat h-85 d-inline-flex w-100 justify-content-around rounded-3">
         <div className="w-30 bg-dark p-4 rounded-4 channels d-flex flex-column">
           <ChannelsComponent />
