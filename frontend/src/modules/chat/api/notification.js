@@ -1,10 +1,11 @@
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-export default () => {
-  toast.success('🦄 Wow so easy!', {
+export const successNotify = (text) => {
+  console.log(text);
+  return toast.success(text, {
     position: "top-center",
-    autoClose: 3000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -12,10 +13,13 @@ export default () => {
     progress: undefined,
     theme: "dark",
   });
+};
 
-  toast.error('🦄 Wow so easy!', {
+export const errorNotify = (text) => {
+  console.log(text);
+  return toast.error(text, {
     position: "top-center",
-    autoClose: 3000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

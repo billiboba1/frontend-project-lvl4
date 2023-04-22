@@ -5,13 +5,13 @@ import { SocketContext } from "./chat";
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { errorNotify, successNotify } from "../api/notification";
 
 const ChannelsComponent = () => {
   const [open, setOpen] = useState({
     collapse: {},
     modal: false,
   });
-  console.log(open);
   const handleShow = () => {
     setOpen({ collapse: open.collapse, modal: true });
   }
@@ -44,11 +44,16 @@ const ChannelsComponent = () => {
           <Modal show={open.modal} onHide={handleClose}>
             <Modal.Body>
               <form action="submit" onSubmit={(e) => {
-                const input = e.target.querySelector('input');
-                e.preventDefault();
-                socket.emit('newChannel', { name: input.value });
-                input.value = '';
-                handleClose();
+                try {
+                  const input = e.target.querySelector('input');
+                  e.preventDefault();
+                  socket.emit('newChannel', { name: input.value });
+                  input.value = '';
+                  handleClose();
+                  successNotify('Канал успешно добавлен');
+                } catch (e) {
+                  errorNotify('Ошибка при добавлении канала');
+                }
               }}
                 className="w-100 flex flex-column">
                 <input className="w-100 form-control" type="text" placeholder="Введите канал" />
@@ -79,9 +84,7 @@ const ChannelsComponent = () => {
                     # {channel}
                   </button>
                   <button className="w-25 border-0 rounded-end rounded-4 btn-dark p-0" onClick={() => {
-                    console.log('before: ', open.collapse);
                     setOpen({ collapse: Object.assign(open.collapse, { [channel]: !open.collapse[channel] }), modal: open.modal });
-                    console.log('after: ', open.collapse);
                   }} aria-controls={`collapse-${channel}`} aria-expanded={open.collapse[channel]}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 2 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -89,7 +92,14 @@ const ChannelsComponent = () => {
                     </svg>
                   </button>
                   <Collapse in={open.collapse[channel]}>
-                    <button type="button" className="btn btn-outline-danger p-0" id={`collapse-${channel}`} onClick={() => socket.emit("removeChannel", { id: chatState.channels.indexOf(channel) + 1 + chatState.deletedChannels })}>
+                    <button type="button" className="btn btn-outline-danger p-0" id={`collapse-${channel}`} onClick={() => {
+                      try {
+                        socket.emit("removeChannel", { id: chatState.channels.indexOf(channel) + 1 + chatState.deletedChannels });
+                        successNotify('Канал удален');
+                      } catch (e) {
+                        errorNotify('Ошибка при удалении канала');
+                      }
+                    }}>
                       Удалить канал
                     </button>
                   </Collapse>

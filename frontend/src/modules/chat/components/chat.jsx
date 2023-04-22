@@ -5,25 +5,11 @@ import ChannelsComponent from './channelsComponent';
 import { logIn, logOut } from "../../..";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
-import init from '../api/socket';
 import { io } from 'socket.io-client';
 import { addChannel, sendMessage, removeChannel, chooseChannel } from "../api/chatSlice";
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
-
-
-/*
-toast.success('🦄 Wow so easy!', {
-  position: "top-center",
-  autoClose: 3000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "dark",
-  });
-*/
+import { errorNotify, successNotify } from "../api/notification";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const socket = io();
 
@@ -55,10 +41,8 @@ export const ChatComponent = () => {
             console.log(data);
             data.channels.forEach((channelData) => {
               const { name } = channelData;
-              console.log(channelData, name);
               if (!['general', 'random'].includes(name)) {
                 dispatch(addChannel({ name }));
-                console.log('added ', name);
               }
             });
             data.messages.forEach((messageData) => {
@@ -67,7 +51,9 @@ export const ChatComponent = () => {
               dispatch(sendMessage({ channel, message, name }));
             });
           });
+        successNotify('Данные успешно загружены!');
       } catch (e) {
+        errorNotify('Не удалось загрузить данные!');
         console.log(e);
       }
     }
@@ -76,6 +62,7 @@ export const ChatComponent = () => {
     <>
       <div className="d-flex flex-row justify-content-between px-3 py-2 footer">
         <p className="d-flex fs-4 align-items-center mb-0">Chat</p>
+        <ToastContainer />
         <button type="button" className="btn btn-dark" onClick={() => {
           localStorage.removeItem(token);
           dispatch(logOut());

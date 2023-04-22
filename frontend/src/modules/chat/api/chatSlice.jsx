@@ -28,10 +28,14 @@ const chatSlice = createSlice({
       }
     },
     removeChannel: (state, action) => {
+      console.log(action.payload.id - 1 - state.deletedChannels);
       const choosenChannel = state.channels[action.payload.id - 1 - state.deletedChannels];
       state.channels = state.channels.filter((channel) => (channel !== choosenChannel));
       delete state.channelsData[choosenChannel];
       state.deletedChannels += 1;
+      if (choosenChannel === state.currentChannel) {
+        state.currentChannel = 'general';
+      }
     },
     sendMessage: (state, action) => {
       console.log(action);
