@@ -41,7 +41,7 @@ const ChannelsComponent = () => {
             Добавить канал
           </Button>
 
-          <Modal show={open.modal} onHide={handleClose}>
+          <Modal show={open.modal} onHide={handleClose} centered aria-labelledby="contained-modal-title-vcenter">
             <Modal.Body>
               <form action="submit" onSubmit={(e) => {
                 try {
@@ -55,7 +55,7 @@ const ChannelsComponent = () => {
                 }
               }}
                 className="w-100 flex flex-column">
-                <input className="w-100 form-control" type="text" placeholder="Введите канал" />
+                <input autoFocus className="w-100 form-control" type="text" placeholder="Введите канал" />
                 <button type="submit" className="w-100 btn align-middle btn-success">Добавить</button>
               </form>
             </Modal.Body>

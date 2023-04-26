@@ -6,7 +6,7 @@ import { logIn, logOut } from "../../..";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 import { io } from 'socket.io-client';
-import { addChannel, sendMessage, removeChannel, chooseChannel } from "../api/chatSlice";
+import { addChannel, sendMessage, removeChannel, chooseChannel, turnOffNotify, turnOnNotify } from "../api/chatSlice";
 import { errorNotify, successNotify } from "../api/notification";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,8 +17,6 @@ export const SocketContext = React.createContext(socket);
 
 export const ChatComponent = () => {
   const navigate = useNavigate();
-  const token = useSelector((state) => state.main.token);
-  const username = useSelector((state) => state.main.username);
   const dispatch = useDispatch();
   socket.on('newMessage', (action) => {
     dispatch(sendMessage(action));
@@ -30,15 +28,15 @@ export const ChatComponent = () => {
     dispatch(removeChannel(action));
   });
   React.useEffect(async () => {
-    if (!localStorage.getItem(token)) {
+    if (!localStorage.getItem('token')) {
       console.log('toLogin');
       navigate('/login');
     } else {
       try {
-        axios.get('/api/v1/data', { headers: { "Authorization": `Bearer ${token}` } })
+        axios.get('/api/v1/data', { headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` } })
           .then((res) => res.data)
           .then((data) => {
-            console.log(data);
+            dispatch(turnOffNotify());
             data.channels.forEach((channelData) => {
               const { name, id } = channelData;
               if (!['general', 'random'].includes(name)) {
@@ -50,9 +48,14 @@ export const ChatComponent = () => {
               dispatch(chooseChannel(channel));
               dispatch(sendMessage({ channel, message, name }));
             });
+            dispatch(turnOnNotify());
           });
         successNotify('Данные успешно загружены!');
       } catch (e) {
+        if (!localStorage.getItem('token')) {
+          console.log('toLogin');
+          navigate('/login');
+        }
         errorNotify('Не удалось загрузить данные!');
         console.log(e);
       }
@@ -64,8 +67,7 @@ export const ChatComponent = () => {
         <p className="d-flex fs-4 align-items-center mb-0">Chat</p>
         <ToastContainer />
         <button type="button" className="btn btn-dark" onClick={() => {
-          localStorage.removeItem(token);
-          dispatch(logOut());
+          localStorage.removeItem('token');
           navigate('/login');
         }}>Выйти</button>
       </div>

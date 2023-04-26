@@ -26,7 +26,7 @@ export default () => {
         onSubmit={(values, { setSubmitting }) => {
           axios.post('/api/v1/login', { username: values.username, password: values.password }).then((response) => {
             dispatch(logIn({ username: values.username, token: response.data.token }));
-            localStorage.setItem(response.data.token, values.username);
+            localStorage.setItem('token', response.data.token);
             navigate('/');
           });
         }}
