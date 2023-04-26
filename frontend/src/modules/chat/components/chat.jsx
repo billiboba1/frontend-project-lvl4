@@ -40,9 +40,9 @@ export const ChatComponent = () => {
           .then((data) => {
             console.log(data);
             data.channels.forEach((channelData) => {
-              const { name } = channelData;
+              const { name, id } = channelData;
               if (!['general', 'random'].includes(name)) {
-                dispatch(addChannel({ name }));
+                dispatch(addChannel({ name, id }));
               }
             });
             data.messages.forEach((messageData) => {

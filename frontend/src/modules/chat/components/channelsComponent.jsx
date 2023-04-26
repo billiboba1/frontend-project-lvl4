@@ -50,7 +50,6 @@ const ChannelsComponent = () => {
                   socket.emit('newChannel', { name: input.value });
                   input.value = '';
                   handleClose();
-                  successNotify('Канал успешно добавлен');
                 } catch (e) {
                   errorNotify('Ошибка при добавлении канала');
                 }
@@ -63,21 +62,21 @@ const ChannelsComponent = () => {
           </Modal>
         </div>
         <div className="w-100 overflow-auto mb-auto">
-          {chatState.channels.map((channel, i) => {
+          {chatState.channels.map((object) => Object.keys(object).map((channel) => {
+            const key = object[channel];
             if (['general', 'random'].includes(channel)) {
               return (
                 <button onClick={
                   () => {
                     dispatch(chooseChannel(channel));
                   }
-                } key={i} className={focus(channel)}># {channel}</button>)
+                } key={key} className={focus(channel)}># {channel}</button>)
             } else {
-              console.log(open.collapse[channel], open.collapse[channel] !== false);
               if (!open.collapse.hasOwnProperty([channel])) {
                 setOpen({ collapse: Object.assign(open.collapse, { [channel]: false }), modal: open.modal });
               }
               return (
-                <div className={focus(channel)}>
+                <div className={focus(channel)} key={key}>
                   <button onClick={
                     () => dispatch(chooseChannel(channel))
                   } className={focusExtra(channel)}>
@@ -94,7 +93,7 @@ const ChannelsComponent = () => {
                   <Collapse in={open.collapse[channel]}>
                     <button type="button" className="btn btn-outline-danger p-0" id={`collapse-${channel}`} onClick={() => {
                       try {
-                        socket.emit("removeChannel", { id: chatState.channels.indexOf(channel) + 1 + chatState.deletedChannels });
+                        socket.emit("removeChannel", { id: key});
                         successNotify('Канал удален');
                       } catch (e) {
                         errorNotify('Ошибка при удалении канала');
@@ -106,7 +105,7 @@ const ChannelsComponent = () => {
                 </div>
               )
             }
-          })}
+          }))}
         </div>
       </div>
     </>
