@@ -10,7 +10,6 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation, Outlet} from 'r
 export const App = () => {
   const path = useSelector((state) => state.main.path);
   const user = useSelector((state) => state.main.user);
-  // Возвращает метод store.dispatch() текущего хранилища
   const dispatch = useDispatch();
   return (
     <BrowserRouter>

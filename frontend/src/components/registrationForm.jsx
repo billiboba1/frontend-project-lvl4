@@ -53,11 +53,11 @@ export default () => {
             <ErrorMessage className="text-danger" name="password" component="div" />
           </div>
           <div className="my-3">
-            <Field className="form-control" id="confirmPassword" type="confirmPassword" name="confirmPassword" placeholder="Подтвердите Пароль"/>
+            <Field className="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="Подтвердите Пароль"/>
             <ErrorMessage className="text-danger" name="confirmPassword" component="div" />
           </div>
           <button className="btn btn-outline-light w-100" type="submit" disabled={isSubmitting}>
-            Зарегистрироваться 
+            Зарегистрироваться
           </button>
         </Form>
       )}
