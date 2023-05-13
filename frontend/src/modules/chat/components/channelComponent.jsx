@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useContext } from "react";
 import { SocketContext } from "./chat";
+import filter from "leo-profanity";
 
 const ChannelComponent = () => {
+  filter.loadDictionary('ru');
   const chatState = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const mainState = useSelector((state) => state.main);
@@ -19,8 +21,8 @@ const ChannelComponent = () => {
             const {name, message} = data;
             return (
               <div className="ms-1 mb-2" key={i}>
-                <b className="m-0 user row">{name}</b>
-                <p className="m-0 ms-2 message row">{message}</p>
+                <b className="m-0 user row">{filter.clean(name)}</b>
+                <p className="m-0 ms-2 message row">{filter.clean(message)}</p>
               </div>
             )
           })}

@@ -29,7 +29,6 @@ export default () => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        console.log({ username: values.username, password: values.password});
         try {
           axios.post('/api/v1/signup', { username: values.username, password: values.password}).then((response) => {
             console.log(response.data);

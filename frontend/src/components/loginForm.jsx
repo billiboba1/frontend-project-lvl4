@@ -24,11 +24,16 @@ export default () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          axios.post('/api/v1/login', { username: values.username, password: values.password }).then((response) => {
-            dispatch(logIn({ username: values.username, token: response.data.token }));
-            localStorage.setItem('token', response.data.token);
-            navigate('/');
-          });
+            axios.post('/api/v1/login', { username: values.username, password: values.password })
+              .then((response) => {
+                dispatch(logIn({ username: values.username, token: response.data.token }));
+                localStorage.setItem('token', response.data.token);
+                navigate('/');
+              })
+              .catch((e) => {
+                console.log(e);
+                navigate('/registration');
+              });
         }}
       >
         {({ isSubmitting }) => (

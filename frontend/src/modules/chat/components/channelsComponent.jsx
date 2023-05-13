@@ -6,12 +6,15 @@ import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { errorNotify, successNotify } from "../api/notification";
+import filter from "leo-profanity";
+
 
 const ChannelsComponent = () => {
   const [open, setOpen] = useState({
     collapse: {},
     modal: false,
   });
+  filter.loadDictionary('ru');
   const handleShow = () => {
     setOpen({ collapse: open.collapse, modal: true });
   }
@@ -70,7 +73,7 @@ const ChannelsComponent = () => {
                   () => {
                     dispatch(chooseChannel(channel));
                   }
-                } key={key} className={focus(channel)}># {channel}</button>)
+                } key={key} className={focus(channel)}># {filter.clean(channel)}</button>)
             } else {
               if (!open.collapse.hasOwnProperty([channel])) {
                 setOpen({ collapse: Object.assign(open.collapse, { [channel]: false }), modal: open.modal });
